@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .calculator {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 8px solid rgb(80, 36, 121);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  button {
+    width: 60px;
+    height: 50px;
+    font-size: 18px;
+    margin: 5px;
+   
+  }
+</style>
+</head>
+<body>
+<div class="calculator">
+  <input type="text" id="display" readonly>
+  <br>
+  <button onclick="appendToDisplay('7')">7</button>
+  <button onclick="appendToDisplay('8')">8</button>
+  <button onclick="appendToDisplay('9')">9</button>
+  <button onclick="appendToDisplay('+')">+</button>
+  <br>
+  <button onclick="appendToDisplay('4')">4</button>
+  <button onclick="appendToDisplay('5')">5</button>
+  <button onclick="appendToDisplay('6')">6</button>
+  <button onclick="appendToDisplay('-')">-</button>
+  <br>
+  <button onclick="appendToDisplay('1')">1</button>
+  <button onclick="appendToDisplay('2')">2</button>
+  <button onclick="appendToDisplay('3')">3</button>
+  <button onclick="appendToDisplay('*')">*</button>
+  <br>
+  <button onclick="appendToDisplay('0')">0</button>
+  <button onclick="appendToDisplay('.')">.</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="appendToDisplay('/')">/</button>
+  <br>          
+  <button onclick="calculateTrig('sin')">sin</button>
+    <button onclick="calculateTrig('cos')">cos</button>
+    <button onclick="calculateTrig('tan')">tan</button>
+  <button onclick="clearDisplay()">C</button>
+  <br>
+  <input type="text" id="resultado" disabled>
+    <br>
+    <button onclick="calcularLog()">log</button>
+    <button onclick="calcularPA()">PA</button>
+    <button onclick="calcularPG()">PG</button>
+    <button onclick="calcularFB()">FB</button>
+
+</div>
+
+<script>
+     function calcularLog() {
+            var numero = prompt("Digite o número para calcular o logaritmo:");
+            var resultado = Math.log10(numero);
+            document.getElementById("resultado").value = resultado;
+        }
+
+        function calcularPA() {
+            var a1 = prompt("Digite o primeiro termo da PA:");
+            var razao = prompt("Digite a razão da PA:");
+            var n = prompt("Digite o número de termos da PA:");
+            var resultado = (parseFloat(a1) + (n - 1) * parseFloat(razao));
+            document.getElementById("resultado").value = resultado;
+        }
+
+        function calcularPG() {
+            var a1 = prompt("Digite o primeiro termo da PG:");
+            var razao = prompt("Digite a razão da PG:");
+            var n = prompt("Digite o número de termos da PG:");
+            var resultado = parseFloat(a1) * Math.pow(parseFloat(razao), n - 1);
+            document.getElementById("resultado").value = resultado;
+        }
+        function appendToDisplay(value) {
+             document.getElementById('display').value += value;
+  }
+
+
+  function calcularFB() {
+    var n = prompt("Digite o número de termos de Fibonacci:");
+    n = parseInt(n);
+    if (isNaN(n) || n <= 0) {
+      document.getElementById("resultado").value = "Entrada inválida";
+      return;
+    }
+
+    var fib = [0, 1];
+    for (var i = 2; i < n; i++) {
+      fib.push(fib[i - 1] + fib[i - 2]);
+    }
+
+    document.getElementById("resultado").value = fib.slice(0, n).join(', ');
+  }
+  
+
+
+        function calculate() {
+            const display = document.getElementById('display');
+                 try {
+                  display.value = eval(display.value);
+            } catch (error) {
+      display.value = 'Error';
+    }
+  }
+
+        function clearDisplay() {
+             document.getElementById('display').value = '';
+  }
+
+        function calculateTrig(trigFunction) {
+            const angle = parseFloat(document.getElementById('display').value);
+            const radians = angle * (Math.PI / 180);
+      
+      let result;
+      switch (trigFunction) {
+        case 'sin':
+          result = Math.sin(radians);
+          break;
+        case 'cos':
+          result = Math.cos(radians);
+          break;
+        case 'tan':
+          result = Math.tan(radians);
+          break;
+      }
+      
+      document.getElementById('display').value = result.toFixed(4);
+    }
+   
+</script>
+</body>
+</html>
